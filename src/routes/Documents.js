@@ -19,8 +19,12 @@ const upload = multer({ storage: storage });
 
 // NEW DOC
 router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 },]), async (req, res) => {
-    const photo_ID = req.files.photo_ID[0].path;
-    const proof_of_address = req.files.proof_of_address[0].path;
+
+    const PhotoID_path = req.files.photo_ID[0].path.replace(/\\/g, '/')
+    const prof_of_address_path = req.files.proof_of_address[0].path.replace(/\\/g, '/')
+
+    const photo_ID = PhotoID_path;
+    const proof_of_address = prof_of_address_path
     const email = req.body.email;
     const user_agreement_freeze = req.body.user_agreement_freeze;
     const consumer_office_freeze = req.body.consumer_office_freeze;
@@ -37,7 +41,7 @@ router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proo
     const checksystems = req.body.checksystems;
     const sagestreamilc = req.body.sagestreamilc;
     const smartcredit = req.body.smartcredit;
-    console.log(req.files);
+    console.log(photo_ID);
     try {
         const newDocs = await Documents.create({
             email: email,
