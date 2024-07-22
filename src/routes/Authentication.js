@@ -78,11 +78,18 @@ router.post("/login", async (req, res) => {
             return res.status(400).json("Wrong Credentials!");
         }
 
+        const accessToken = Jwt.sign({ id: user._id, email: user.email, name: user.first_name }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+        const options = {
+            httpOnly: false,
+            secure: false, // Set to true for HTTPS, required when SameSite=None
+            sameSite: "None", // Required for cookies to be sent in cross-origin requests
+        };
         const { password, ...others } = user.toObject();
 
-        return res.status(200).json({ msg: "Success Login", response: others });
+        return res.status(200).cookie("accessToken", accessToken, options).json({ msg: "Success Login", response: others, accessToken: accessToken })
+
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err.message);
     }
 });
 
