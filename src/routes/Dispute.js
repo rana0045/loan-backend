@@ -1,26 +1,15 @@
 import express from "express";
 import multer from "multer";
 import { Dispute } from "../models/dispute.model.js";
-
+import { upload } from "../middleware/multer.moddleware.js";
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-        const user = req.body.email;
-        cb(null, `${user}-${Date.now()}-${file.originalname}`);
-    },
-});
 
-const upload = multer({ storage: storage });
 
 // NEW DISPUTE
-router.post("/", upload.fields([
-    { name: "equifax_report", maxCount: 1 },
-    { name: "experian_report", maxCount: 1 },
-    { name: "transUnion_report", maxCount: 1 },
+router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
+{ name: "experian_report", maxCount: 1 },
+{ name: "transUnion_report", maxCount: 1 },
 ]), async (req, res) => {
     try {
         const {
@@ -38,9 +27,9 @@ router.post("/", upload.fields([
             transUnion_account,
         } = req.body;
 
-        const equifax_report = req.files.equifax_report[0].path;
-        const experian_report = req.files.experian_report[0].path;
-        const transUnion_report = req.files.transUnion_report[0].path;
+        const equifax_report = req.files.equifax_report[0].path.replace(/\\/g, '/');
+        const experian_report = req.files.experian_report[0].path.replace(/\\/g, '/');
+        const transUnion_report = req.files.transUnion_report[0].path.replace(/\\/g, '/');
 
         const newDispute = await Dispute.create({
             email,

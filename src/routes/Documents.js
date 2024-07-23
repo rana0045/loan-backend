@@ -1,27 +1,14 @@
 import express from "express";
-import multer from "multer";
-import path from "path";
 import { Documents } from "../models/documents.model.js";
-
+import { upload } from "../middleware/multer.moddleware.js";
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function (req, file, cb) {
-        console.log(req.body);
-        cb(null, Date.now() + "-" + file.originalname);
-    },
-});
-
-const upload = multer({ storage: storage });
 
 // NEW DOC
 router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 },]), async (req, res) => {
-
     const PhotoID_path = req.files.photo_ID[0].path.replace(/\\/g, '/')
     const prof_of_address_path = req.files.proof_of_address[0].path.replace(/\\/g, '/')
+    console.log(req.files.photo_ID);
 
     const photo_ID = PhotoID_path;
     const proof_of_address = prof_of_address_path

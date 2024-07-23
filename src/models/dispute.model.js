@@ -4,12 +4,6 @@ const disputeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    id: {
-        type: Number,
-
-        unique: true,
-        autoIncrement: true,
-    },
     equifax_report: {
         type: String,
         required: true,
