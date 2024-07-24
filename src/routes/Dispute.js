@@ -25,11 +25,27 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
             equifax_account,
             experian_account,
             transUnion_account,
+            experian_letter,
+            trans_union_letter,
+            equifax_letter
         } = req.body;
+
+        if (!email || !reason || !letter_name) {
+            return res.status(400).json({ message: "email reason and letter name is required" });
+        }
+
+
+        if (!req.files.equifax_report || !req.files.experian_report || !req.files.transUnion_report) {
+            return res.status(400).json({ message: "All report files are required." });
+        }
+
+
 
         const equifax_report = req.files.equifax_report[0].path.replace(/\\/g, '/');
         const experian_report = req.files.experian_report[0].path.replace(/\\/g, '/');
         const transUnion_report = req.files.transUnion_report[0].path.replace(/\\/g, '/');
+
+
 
         const newDispute = await Dispute.create({
             email,
@@ -47,16 +63,19 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
             equifax_account,
             experian_account,
             transUnion_account,
+            experian_letter,
+            trans_union_letter,
+            equifax_letter
         });
 
-        res.status(201).json({ message: "Dispute created successfully", newDispute });
+        res.status(200).json({ message: "Dispute created successfully", newDispute });
     } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
+
+        res.status(500).json(err.message);
     }
 });
 
-// GET ALL DISPUTES
+// GET ALL OF THE USER DISPUTES
 router.get("/", async (req, res) => {
     const { email } = req.query;
     try {
@@ -70,6 +89,21 @@ router.get("/", async (req, res) => {
         return res.status(500).json({ message: "Error getting disputes", error: error.message });
     }
 });
+
+//GET ALL THE DISPUTE
+
+router.get('/all', async (req, res) => {
+    try {
+        const disputes = await Dispute.find();
+        if (!disputes) {
+            return res.status(404).json({ message: "disputes not found" })
+        }
+        return res.status(200).json({ message: "all the disputes", disputes })
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+})
 
 // GET SPECIFIC DISPUTE
 router.get("/:id", async (req, res) => {
