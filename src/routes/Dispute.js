@@ -98,7 +98,7 @@ router.get('/all', async (req, res) => {
         if (!disputes) {
             return res.status(404).json({ message: "disputes not found" })
         }
-        return res.status(200).json({ message: "all the disputes", disputes })
+        return res.status(200).json({ message: "all the disputes", data: disputes })
 
     } catch (error) {
         return res.status(500).json({ message: error.message })
