@@ -72,6 +72,10 @@ const disputeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+        default: "Action needed ",
+    }
 }, { timestamps: true });
 
 export const Dispute = mongoose.model("Dispute", disputeSchema);
