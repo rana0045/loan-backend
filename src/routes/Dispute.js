@@ -38,6 +38,7 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
 
         if (!email || !reason || !letter_name) {
             return res.status(400).json({ message: "email reason and letter name is required" });
+
         }
 
 
