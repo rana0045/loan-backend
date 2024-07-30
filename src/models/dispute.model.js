@@ -72,10 +72,45 @@ const disputeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    equifaxRating: {
+        type: String,
+        enum: ["GOOD", "EXCELLENT", "BAD"],
+        default: "GOOD",
+    },
+    equifaxScore: {
+        type: Number,
+        min: 0,
+        max: 1000,
+        required: true
+    },
+    experianRating: {
+        type: String,
+        enum: ["GOOD", "EXCELLENT", "BAD"],
+        default: "GOOD",
+    },
+    experianScore: {
+        type: Number,
+        min: 0,
+        max: 1000,
+        required: true
+    },
+    transUnionRating: {
+        type: String,
+        enum: ["GOOD", "EXCELLENT", "BAD"],
+        default: "GOOD",
+    },
+    transUnionScore: {
+        type: Number,
+        min: 0,
+        max: 1000,
+        required: true
+    },
+
     status: {
         type: String,
         default: "Action needed ",
     }
+
 }, { timestamps: true });
 
 export const Dispute = mongoose.model("Dispute", disputeSchema);

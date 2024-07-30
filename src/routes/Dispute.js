@@ -27,7 +27,13 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
             transUnion_account,
             experian_letter,
             trans_union_letter,
-            equifax_letter
+            equifax_letter,
+            equifaxRating,
+            equifaxScore,
+            experianRating,
+            experianScore,
+            transUnionRating,
+            transUnionScore
         } = req.body;
 
         if (!email || !reason || !letter_name) {
@@ -39,7 +45,12 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
             return res.status(400).json({ message: "All report files are required." });
         }
 
-
+        if (equifaxScore > 1000 || transUnionScore > 1000 || experianScore > 1000) {
+            return res.status(400).json({ message: "credit score can not be more then 1000" });
+        }
+        if (!equifaxScore || !transUnionScore || !experianScore) {
+            return res.status(400).json({ message: "All credit score required!" });
+        }
 
         const equifax_report = req.files.equifax_report[0].path.replace(/\\/g, '/');
         const experian_report = req.files.experian_report[0].path.replace(/\\/g, '/');
@@ -65,7 +76,13 @@ router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
             transUnion_account,
             experian_letter,
             trans_union_letter,
-            equifax_letter
+            equifax_letter,
+            equifaxScore,
+            equifaxRating,
+            experianRating,
+            experianScore,
+            transUnionRating,
+            transUnionScore
         });
 
         res.status(200).json({ message: "Dispute created successfully", newDispute });
