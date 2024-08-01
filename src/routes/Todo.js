@@ -65,10 +65,11 @@ router.put("/:id", async (req, res) => {
         if (!id) {
             return res.status(404).json({ message: " id not found" })
         }
-        const Tasks = await Todo.findByIdAndUpdate(id, {
-            status
-        })
-
+        const updatedTask = await Todo.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true, runValidators: true }
+        );
         if (!Tasks) {
             return res.status(404).json({ message: " Tasks not found" })
         }
