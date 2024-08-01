@@ -73,7 +73,7 @@ router.put("/:id", async (req, res) => {
         if (!Tasks) {
             return res.status(404).json({ message: " Tasks not found" })
         }
-        return res.status(200).json({ message: "user task deleted", data: Tasks, success: true })
+        return res.status(200).json({ message: "user task Updated", data: Tasks, success: true })
 
     } catch (error) {
         return res.status(500).json({ error: error.message })
