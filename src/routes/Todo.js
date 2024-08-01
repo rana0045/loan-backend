@@ -70,7 +70,7 @@ router.put("/:id", async (req, res) => {
             { status },
             { new: true, runValidators: true }
         );
-        if (!Tasks) {
+        if (!updatedTask) {
             return res.status(404).json({ message: " Tasks not found" })
         }
         return res.status(200).json({ message: "user task Updated", data: updatedTask, success: true })
