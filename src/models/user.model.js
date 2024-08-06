@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
+
     },
     ss_number: {
         type: String,
@@ -45,6 +46,10 @@ const userSchema = new mongoose.Schema({
     payment_status: {
         type: String,
         default: "unpaid"
+    },
+    packages: {
+        type: String,
+
     }
 }, { timestamps: true });
 
