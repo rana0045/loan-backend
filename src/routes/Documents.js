@@ -17,7 +17,7 @@ router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proo
     const consumer_office_freeze = req.body.consumer_office_freeze;
     const lexis_nexis_freeze = req.body.lexis_nexis_freeze;
     const teletrack_freeze = req.body.teletrack_freeze;
-    const boompay = req.body.boompay;
+    const boompay = req.body.boompay; 9
     const kikoff = req.body.kikoff;
     const self = req.body.self;
     const creditstrong = req.body.creditstrong;
@@ -28,7 +28,7 @@ router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proo
     const checksystems = req.body.checksystems;
     const sagestreamilc = req.body.sagestreamilc;
     const smartcredit = req.body.smartcredit;
-    console.log(photo_ID);
+
     try {
         const newDocs = await Documents.create({
             email: email,
