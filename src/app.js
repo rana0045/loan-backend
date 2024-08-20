@@ -26,6 +26,7 @@ import userRoute from "./routes/User.js"
 import docsRoute from "./routes/Documents.js"
 import dispRoute from "./routes/Dispute.js"
 import todoRoute from "./routes/Todo.js"
+import packageRoute from "./routes/package.js"
 
 app.use("/auth", authRoute)
 app.use("/provider", provRoute);
@@ -33,4 +34,5 @@ app.use("/user", userRoute);
 app.use("/doc", docsRoute);
 app.use("/dispute", dispRoute);
 app.use("/todo", todoRoute);
+app.use("/package", packageRoute);
 export default app

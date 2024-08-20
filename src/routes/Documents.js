@@ -5,10 +5,11 @@ const router = express.Router();
 
 
 // NEW DOC
-router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 },]), async (req, res) => {
+router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 }, { name: "photo_of_SSID", maxCount: 1 }]), async (req, res) => {
     const PhotoID_path = req.files.photo_ID[0].path.replace(/\\/g, '/')
     const prof_of_address_path = req.files.proof_of_address[0].path.replace(/\\/g, '/')
-    console.log(req.files.photo_ID);
+    const photo_of_SSID_path = req.files.photo_of_SSID[0].path.replace(/\\/g, '/')
+
 
     const photo_ID = PhotoID_path;
     const proof_of_address = prof_of_address_path

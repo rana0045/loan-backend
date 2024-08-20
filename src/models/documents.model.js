@@ -13,6 +13,10 @@ const documentsSchema = new mongoose.Schema({
         type: String,
         default: 'photo',
     },
+    photo_of_SSID: {
+        type: String,
+        default: 'photo',
+    },
     user_agreement_freeze: {
         type: Boolean,
         default: false,
