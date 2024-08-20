@@ -45,7 +45,28 @@ route.get('/get', async (req, res) => {
     }
 })
 
+route.get('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (!id) {
+            return res.status(404).json({ error: "Invalid id" })
+        }
+
+
+        const data = await Package.findById(id)
+
+        if (!data) {
+            return res.status(404).json({ error: "Package not found" })
+        }
+        return res.status(200).json({
+            data: data, message: "success"
+        })
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+})
+
 
 
 export default route
-
