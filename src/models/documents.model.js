@@ -9,6 +9,10 @@ const documentsSchema = new mongoose.Schema({
         type: String,
         default: 'photo',
     },
+    photo_ID1: {
+        type: String,
+        default: 'photo',
+    },
     proof_of_address: {
         type: String,
         default: 'photo',
@@ -17,10 +21,11 @@ const documentsSchema = new mongoose.Schema({
         type: String,
         default: 'photo',
     },
-    user_agreement_freeze: {
-        type: Boolean,
-        default: false,
+    photo_of_SSID1: {
+        type: String,
+        default: 'photo',
     },
+
     consumer_office_freeze: {
         type: Boolean,
         default: false,
@@ -73,10 +78,35 @@ const documentsSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    smartcredit: {
+    checksystems: {
         type: Boolean,
         default: false,
     },
+    extra: {
+        type: Boolean,
+        default: false,
+    },
+    meetava: {
+        type: Boolean,
+        default: false,
+    },
+    rental: {
+        type: Boolean,
+        default: false,
+    },
+    rentreport: {
+        type: Boolean,
+        default: false,
+
+    },
+    teletrack_freeze: {
+        type: Boolean,
+        default: false,
+    },
+    tomocredit: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true });
 
 

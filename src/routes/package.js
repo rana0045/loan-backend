@@ -28,7 +28,6 @@ route.post('/add', async (req, res) => {
     }
 })
 
-
 route.get('/get', async (req, res) => {
     try {
         const allPackages = await Package.find()

@@ -5,14 +5,19 @@ const router = express.Router();
 
 
 // NEW DOC
-router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 }, { name: "photo_of_SSID", maxCount: 1 }]), async (req, res) => {
+router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "photo_ID1", maxCount: 1 }, { name: "proof_of_address", maxCount: 1 }, { name: "photo_of_SSID", maxCount: 1 }, { name: "photo_of_SSID1", maxCount: 1 }]), async (req, res) => {
     const PhotoID_path = req.files.photo_ID[0].path.replace(/\\/g, '/')
+    const PhotoID_path1 = req.files.photo_ID1[0].path.replace(/\\/g, '/')
     const prof_of_address_path = req.files.proof_of_address[0].path.replace(/\\/g, '/')
     const photo_of_SSID_path = req.files.photo_of_SSID[0].path.replace(/\\/g, '/')
+    const photo_of_SSID_path1 = req.files.photo_of_SSID1[0].path.replace(/\\/g, '/')
 
 
     const photo_ID = PhotoID_path;
-    const proof_of_address = prof_of_address_path
+    const photo_ID1 = PhotoID_path1;
+    const proof_of_address = prof_of_address_path;
+    const photo_of_SSID = photo_of_SSID_path
+    const photo_of_SSID1 = photo_of_SSID_path1
     const email = req.body.email;
     const user_agreement_freeze = req.body.user_agreement_freeze;
     const consumer_office_freeze = req.body.consumer_office_freeze;
@@ -29,12 +34,21 @@ router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proo
     const checksystems = req.body.checksystems;
     const sagestreamilc = req.body.sagestreamilc;
     const smartcredit = req.body.smartcredit;
+    const extra = req.body.extra;
+    const meetava = req.body.meetava;
+    const rental = req.body.rental;
+    const rentreport = req.body.rentalreport;
+
+    const tomocredit = req.body.tomocredit;
 
     try {
         const newDocs = await Documents.create({
             email: email,
             photo_ID: photo_ID,
+            photo_ID1: photo_ID1,
             proof_of_address: proof_of_address,
+            photo_of_SSID: photo_of_SSID,
+            photo_of_SSID1: photo_of_SSID1,
             user_agreement_freeze: user_agreement_freeze,
             consumer_office_freeze: consumer_office_freeze,
             lexis_nexis_freeze: lexis_nexis_freeze,
@@ -50,6 +64,12 @@ router.post("/", upload.fields([{ name: "photo_ID", maxCount: 1 }, { name: "proo
             checksystems: checksystems,
             sagestreamilc: sagestreamilc,
             smartcredit: smartcredit,
+            extra: extra,
+            meetava: meetava,
+            rental: rental,
+            rentreport: rentreport,
+            tomocredit: tomocredit
+
         });
         res.status(201).json({ message: "Document created successfully", newDocs });
     } catch (err) {
