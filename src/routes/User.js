@@ -16,13 +16,44 @@ router.get("/", async (req, res) => {
     }
 });
 
+const getMonthName = (date) => {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return monthNames[new Date(date).getMonth()];
+};
+
+router.get('/data', async (req, res) => {
+    try {
+        const users = await User.find();
+
+        // Map users into an array of { month, users }
+        const monthData = users.reduce((acc, user) => {
+            console.log(acc);
+            const month = getMonthName(user.createdAt);
+
+            // Find if the month already exists in the accumulator
+            const monthEntry = acc.find(entry => entry.month === month);
+            if (monthEntry) {
+                monthEntry.users += 1; // Increment user count for this month
+            } else {
+                acc.push({ month: month, users: 1 }); // Add new month entry
+            }
+            return acc;
+        }, []);
+
+        res.status(200).json({ data: monthData });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
 // GET SPECIFIC USER
 router.get("/:id", async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).json(user);
     } catch (err) {
-        console.log("Hello");
+
         res.status(500).json(err);
     }
 });
@@ -68,5 +99,7 @@ router.delete("/:id", async (req, res) => {
         return res.status(500).json({ error: "Something went wrong" });
     }
 });
+
+
 
 export default router;
