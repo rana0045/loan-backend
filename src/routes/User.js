@@ -27,7 +27,7 @@ router.get('/data', async (req, res) => {
 
         // Map users into an array of { month, users }
         const monthData = users.reduce((acc, user) => {
-            console.log(acc);
+
             const month = getMonthName(user.createdAt);
 
             // Find if the month already exists in the accumulator

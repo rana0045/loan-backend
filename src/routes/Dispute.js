@@ -7,9 +7,9 @@ const router = express.Router();
 
 
 // NEW DISPUTE
-router.post("/", upload.fields([{ name: "equifax_report", maxCount: 1 },
-{ name: "experian_report", maxCount: 1 },
-{ name: "transUnion_report", maxCount: 1 },
+router.post("/", upload.fields([{ name: "equifax_report", },
+{ name: "experian_report", },
+{ name: "transUnion_report", },
 ]), async (req, res) => {
     try {
         const {
@@ -157,6 +157,25 @@ router.put("/:id", async (req, res) => {
             return;
         }
 
+        res.status(200).json(updatedDispute);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+router.put("/status-update/:id", async (req, res) => {
+    const { id } = req.params;
+
+    console.log(req.body);
+    try {
+        const updatedDispute = await Dispute.findById(id);
+
+        if (!updatedDispute) {
+            res.status(404).json({ message: "Dispute not found" });
+            return;
+        }
+        updatedDispute.activeStatus.push(req.body)
+        await updatedDispute.save()
         res.status(200).json(updatedDispute);
     } catch (err) {
         console.error(err);
